@@ -1,0 +1,176 @@
+<div class="heading">Exam Schedule</div>
+<mat-card>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="View Schedule">
+            <br>
+            <form action="" #search>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        Filter
+                    </mat-expansion-panel-header>
+                    <form>
+                        <!-- <p>Select exam date range</p> -->
+                        <mat-form-field class="report-width-15">
+                            <input matInput [matDatepicker]="pickerfromdate" placeholder="From Date">
+                            <mat-datepicker-toggle matSuffix [for]="pickerfromdate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerfromdate></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="report-width-15">
+                            <input matInput [matDatepicker]="pickertodate" placeholder="To Date">
+                            <mat-datepicker-toggle matSuffix [for]="pickertodate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickertodate></mat-datepicker>
+                        </mat-form-field>
+                        <mat-action-row>
+                            <button mat-stroked-button color="warn" type="reset">Cancel</button>
+                            <!-- <button mat-flat-button color="primary">Download</button> -->
+                            <button mat-flat-button color="primary" (click)="demoprint()">Print</button>
+                            <button mat-flat-button color="primary">View</button>
+                        </mat-action-row>
+                    </form>
+                </mat-expansion-panel>
+            
+                <mat-form-field id="searchBar">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Exam id </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.title}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="examname">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Exam name </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.examname}} </mat-cell>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.description}} </mat-cell>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="startingdate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Starting Date </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.startingdate}} </mat-cell>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="class">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Class </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.class}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subject">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.subject}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="obt_marks">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Obtained </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.obt_marks}} </mat-cell>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="ttl_marks">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Total Mark </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.ttl_marks}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="passing_mark">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Passing Mark </mat-header-cell>
+                        <mat-cell *matCellDef="let student"> {{student.passing_mark}} </mat-cell>
+                    </ng-container>
+
+                    <!-- action Column -->
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef class="tbl-right"> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="tbl-right">
+                            <button mat-icon-button color="primary" (click)="openForm()" matTooltip="View">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" matTooltip="Edit">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" (click)="onDeleteNotice()" matTooltip="Delete">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let student; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+
+            </form>
+        </mat-tab>
+        <!-- =================================================================================================== -->
+        <mat-tab label="Add Schedule">
+            <br>
+            <form action="" [formGroup]="addExamscheduleForm" #addExamschedule>
+                <mat-form-field class="small-width">
+                    <input type="text" matInput placeholder="Exam id" formControlName="title" required>
+                    <mat-error *ngIf="addExamscheduleForm.get('title').invalid">Please enter title</mat-error>
+                </mat-form-field>
+                <mat-form-field class="small-width">
+                    <input type="text" matInput placeholder="Exam name" formControlName="examname" required>
+                    <mat-error *ngIf="addExamscheduleForm.get('examname').invalid">Please enter title</mat-error>
+                </mat-form-field>
+                <mat-form-field class="width-10">
+                    <input type="number" matInput placeholder="Total Mark" formControlName="totalmark" required min="0">
+                    <mat-error *ngIf="addExamscheduleForm.get('totalmark').invalid">Please select total mark</mat-error>
+                </mat-form-field>
+                <mat-form-field class="width-10">
+                    <input type="number" matInput placeholder="Passing Mark" formControlName="passingmark" required min="0">
+                    <mat-error *ngIf="addExamscheduleForm.get('passingmark').invalid">Please select passing mark</mat-error>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="small-width">
+                    <mat-label>Select class</mat-label>
+                    <mat-select formControlName="class" required>
+                        <mat-option *ngFor="let classsbj of classsbjs" [value]="classsbj.value">
+                            {{classsbj.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addExamscheduleForm.get('class').invalid">Please select class</mat-error>
+                </mat-form-field>
+                <mat-form-field class="small-width">
+                    <mat-label>Select subject</mat-label>
+                    <mat-select formControlName="subject" required>
+                        <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+                            {{subject.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addExamscheduleForm.get('subject').invalid">Please select subject</mat-error>
+                </mat-form-field>
+                <mat-form-field class="small-width">
+                    <input matInput [matDatepicker]="pickertimetable" placeholder="Date of Exam"
+                        formControlName="dateofexam" required>
+                    <mat-datepicker-toggle matSuffix [for]="pickertimetable"></mat-datepicker-toggle>
+                    <mat-datepicker #pickertimetable></mat-datepicker>
+                    <mat-error *ngIf="addExamscheduleForm.get('dateofexam').invalid">Please select date of exam</mat-error>
+                </mat-form-field>
+                <mat-form-field class="width-10">
+                    <input matInput type="time" placeholder="Start [HH:MM AM/PM]" value="00:00" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" formControlName="starttime" required>
+                    <mat-error *ngIf="addExamscheduleForm.get('starttime').invalid">Please select starting time</mat-error>
+                </mat-form-field>
+                <mat-form-field class="width-10">
+                    <input matInput type="time" placeholder="End [HH:MM AM/PM]" value="00:00" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" formControlName="endtime" required>
+                    <mat-error *ngIf="addExamscheduleForm.get('endtime').invalid">Please select ending time</mat-error>
+                </mat-form-field>
+                <mat-form-field class="small-width">
+                    <textarea type="text" matInput placeholder="Description" rows="1"></textarea>
+                </mat-form-field>
+                <button mat-icon-button color="primary" aria-label="add more class and subject">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <br>
+                <button mat-flat-button color="primary" type="submit">Add</button>
+                <button mat-stroked-button color="warn" type="reset">Cancel</button>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+
+    <!-- <button class="new-btn" mat-fab (click)="openForm()" color="primary" aria-label="Example icon-button with a heart icon">
+    <mat-icon>add</mat-icon>
+</button> -->
+</mat-card>

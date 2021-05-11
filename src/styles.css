@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* @import "@angular/material/prebuilt-themes/indigo-pink.css"; */
+
+
+/*
+deeppurple-amber.css
+indigo-pink.css
+pink-bluegray.css
+purple-green.css
+*/
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+    position: absolute;
+    right: 0;
+    z-index: 2;
+    width: 0px;
+}
+
+*:hover::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #666;
+}
+
+@font-face {
+    font-family: "CabinSketch-Ragular";
+    src: url(./assets/CabinSketch-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "CabinSketch-Bold";
+    src: url(./assets/CabinSketch-Bold.ttf) format("truetype");
+}
+
+.ocim-font-green {
+    color: #6aa84f;
+}
+
+.ocim-font-red {
+    color: #cc0000;
+}
+
+.ocim-font-blue {
+    color: #3d85c6;
+}
+
+.ocim-font-yellow {
+    color: #f1c232;
+}
+
+
+/* component heading */
+
+.heading {
+    margin: 20px 0;
+    color: #ffffff;
+    font-size: 36px;
+    display: block;
+}
+
+.custom-dialog {
+    /* Faculty -> Time table : to diplay photo in center of the dialogbox */
+    text-align: center;
+}
+
+
+/* common css property */
+
+.mat-column-name {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+mat-form-field {
+    margin: 8px !important;
+}
+
+button {
+    margin: 5px !important;
+}
+
+.bar-chart-container {
+    width: 800px;
+    height: 400px !important;
+    margin: auto;
+}
+
+#searchBar {
+    font-size: 14px;
+    margin-top: 10px;
+    width: -webkit-fill-available !important;
+}
+
+
+/* dashboard */
+
+.dashboard-container {
+    box-shadow: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.container {
+    display: flex;
+    width: auto;
+    box-shadow: none;
+    background: none;
+}
+
+.container .whats-new p {
+    margin: auto 10px;
+}
+
+.mat-card-content table {
+    margin: auto;
+    width: 200px;
+}
+
+.mat-card-content table tr td {
+    font-size: 20px;
+    padding: 2px;
+}
+
+.mat-card-content table tr td:last-of-type {
+    text-align: right;
+}
+
+.whats-new {
+    display: inline-block !important;
+    width: 58%;
+    margin: 16px 8px 16px 0;
+}
+
+.total {
+    display: inline-block !important;
+    width: 35%;
+    margin: 16px 0 8px 16px;
+}
+
+.report-width-20 {
+    display: inline-block;
+    width: 20%;
+}
+
+.report-width-15 {
+    display: inline-block;
+    width: 15%;
+}
+
+.report-width-10 {
+    display: inline-block;
+    width: 10%;
+}

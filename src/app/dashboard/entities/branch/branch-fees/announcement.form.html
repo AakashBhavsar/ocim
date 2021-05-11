@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Add Fees Announcement</h1>
+<form action="" [formGroup]="feesannouncementForm" #feesannouncement>
+    <div>
+        <mat-form-field class="full-width">
+            <input type="text" matInput placeholder="Title" formControlName="title" required>
+            <mat-error *ngIf="feesannouncementForm.get('title').invalid">Please enter title
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select placeholder="Class" [formControl]="classannouncement" required multiple>
+                <mat-select-trigger>
+                    {{classannouncement.value ? classannouncement.value[0] : ''}}
+                    <span *ngIf="classannouncement.value?.length > 1" class="example-additional-selection">
+                    (+{{classannouncement.value.length - 1}} {{classannouncement.value?.length === 2 ? 'other' : 'others'}})
+                </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let classannouncement of Classsbj" [value]="classannouncement.value">{{classannouncement.viewValue}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="feesannouncementForm.get('classannouncement').invalid">Please select class
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input type="number" matInput placeholder="Fees" formControlName="fees" required min="0" step="100">
+            <mat-error *ngIf="feesannouncementForm.get('fees').invalid">Please enter fees
+            </mat-error>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">Add</button>
+        <button mat-stroked-button color="warn" type="reset" (click)="onCancel()">Cancel</button>
+    </div>
+</form>

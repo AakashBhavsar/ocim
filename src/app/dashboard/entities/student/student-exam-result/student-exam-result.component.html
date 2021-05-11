@@ -1,0 +1,67 @@
+<div class="heading">Exam Result</div>
+<mat-card>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            Filter
+        </mat-expansion-panel-header>
+        <form class="no-add-student">
+            
+            <mat-form-field class="report-width-15">
+                <mat-label>Exam</mat-label>
+                <mat-select>
+                    <mat-option value="option">Unit test 1</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-action-row>
+                <button mat-stroked-button color="warn" type="reset">Cancle</button>
+                <!-- <button mat-flat-button color="primary">Download</button> -->
+                <button mat-flat-button color="primary" (click)="generateReport()">Print</button>
+                <button mat-flat-button color="primary">View</button>
+            </mat-action-row>
+        </form>
+    </mat-expansion-panel>
+            <!-- student list -->
+            <mat-form-field id="searchBar" style="width: 100%;">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            </mat-form-field>
+            <mat-card class="card-shadow">
+            <mat-card-title>Unit Test 1</mat-card-title>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z0  table" matSort>
+
+                <ng-container matColumnDef="exmdate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                    <td mat-cell *matCellDef="let student"> {{student.exmdate}} </td>
+                    <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th>
+                    <td mat-cell *matCellDef="let student"> {{student.subject}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Total </td>
+                </ng-container>
+
+                <ng-container matColumnDef="obt_marks">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Obtained </th>
+                    <td mat-cell *matCellDef="let student"> {{student.obt_marks}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalObt()}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ttl_marks">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+                    <td mat-cell *matCellDef="let student"> {{student.ttl_marks}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotal()}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="per">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage </th>
+                    <td mat-cell *matCellDef="let student"> {{student.per}}% </td>
+                    <td mat-footer-cell *matFooterCellDef> {{total_percentage}}% </td>
+                </ng-container>
+                <!-- action Column -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let student; columns: displayedColumns;" [ngStyle]="{'background-color':student.obt_marks <= '17' ? '#ffebee': 'none'}"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr>
+            </table>
+        </mat-card>
+</mat-card>

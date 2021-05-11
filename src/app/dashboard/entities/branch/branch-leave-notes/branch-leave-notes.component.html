@@ -1,0 +1,106 @@
+<div class="heading">Leave notes</div>
+<mat-card>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            Filter
+        </mat-expansion-panel-header>
+        <form class="no-add-student">
+            <mat-form-field class="report-width-15">
+                <mat-label>Class</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let class of classes" [value]="class.value">
+                        {{class.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="report-width-15">
+                <mat-label>Status</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let status of statuss" [value]="status.value">
+                        {{status.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- <p>Select date range</p> -->
+            <mat-form-field class="report-width-15">
+                <input matInput [matDatepicker]="pickerfromdate" placeholder="From Date">
+                <mat-datepicker-toggle matSuffix [for]="pickerfromdate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerfromdate></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="report-width-15">
+                <input matInput [matDatepicker]="pickertodate" placeholder="To Date">
+                <mat-datepicker-toggle matSuffix [for]="pickertodate"></mat-datepicker-toggle>
+                <mat-datepicker #pickertodate></mat-datepicker>
+            </mat-form-field>
+            <mat-action-row>
+                <button mat-stroked-button color="warn" type="reset">Cancel</button>
+                <!-- <button mat-flat-button color="primary">Download</button> -->
+                <button mat-flat-button color="primary" (click)="demoprint()">Print</button>
+                <button mat-flat-button color="primary">View</button>
+            </mat-action-row>
+        </form>
+    </mat-expansion-panel>
+    <!-- leave notes list -->
+    <mat-form-field id="searchBar">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+            <mat-cell *matCellDef="let leave"> {{leave.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let leave"> {{leave.studentName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="class">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Class </mat-header-cell>
+            <mat-cell *matCellDef="let leave"> {{leave.class}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="subject">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+            <mat-cell *matCellDef="let leave"> {{leave.subject}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="from">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> From </mat-header-cell>
+            <mat-cell *matCellDef="let leave"> {{leave.leaveFrom}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="to">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> To </mat-header-cell>
+            <mat-cell *matCellDef="let leave"> {{leave.leaveTo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let leave">
+                <mat-chip-list>
+                    <mat-chip [ngStyle]="{color: getColor(leave.status)}" style="background-color: #f5f5f5;">{{leave.status}}</mat-chip>
+                </mat-chip-list>
+            </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef class="tbl-right"> Action </mat-header-cell>
+            <mat-cell *matCellDef="let leave" class="tbl-right">
+                <button mat-icon-button color="primary" matTooltip="view" (click)="onViewLeaveNote($event, leave)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let leave; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+</mat-card>

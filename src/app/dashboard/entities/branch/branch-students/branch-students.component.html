@@ -1,0 +1,271 @@
+<div class="heading">Students</div>
+<mat-card>
+
+    <mat-tab-group dynamicHeight>
+        <!-- view Students -->
+        <mat-tab label="View students">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Filter
+                </mat-expansion-panel-header>
+                <form>
+                    <div class="report-field-inline">
+                        <div class="mat-body-strong">Class</div>
+                        <mat-form-field class="report-width-15">
+                            <mat-label>Class</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let class of classes" [value]="class.value">
+                                    {{class.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="report-field-inline">
+                        <mat-form-field class="report-width-15">
+                            <input matInput [matDatepicker]="pickerfromdate" placeholder="From Date">
+                            <mat-datepicker-toggle matSuffix [for]="pickerfromdate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerfromdate></mat-datepicker>
+                        </mat-form-field>
+                        <div class="mat-body-strong">Joining Date</div>
+                        <mat-form-field class="report-width-15">
+                            <input matInput [matDatepicker]="pickertodate" placeholder="To Date">
+                            <mat-datepicker-toggle matSuffix [for]="pickertodate"></mat-datepicker-toggle>
+                            <mat-datepicker #pickertodate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="report-field-inline">
+                        <div class="mat-body-strong">Address</div>
+                        <mat-form-field class="full-width" class="report-width-15">
+                            <mat-label>State</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let state of states" [value]="state.value">
+                                    {{state.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" class="report-width-15">
+                            <mat-label>City</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let city of cities" [value]="city.value">
+                                    {{city.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" class="report-width-15">
+                            <mat-label>Pincode</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let pincode of pincodes" [value]="pincode.value">
+                                    {{pincode.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <mat-card-actions align="end">
+                        <button mat-stroked-button color="warn" type="reset">Cancle</button>
+                        <!-- <button mat-flat-button color="primary">Download</button> -->
+                        <button mat-flat-button color="primary" (click)="demoprint()">Print</button>
+                        <button mat-flat-button color="primary">View</button>
+                    </mat-card-actions>
+                </form>
+            </mat-expansion-panel>
+            <br>
+            <mat-form-field id="searchBar">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            </mat-form-field>
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8 tbl-shadow">
+                <!-- Position Column -->
+                <!-- <ng-container matColumnDef="position">
+                        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                    </ng-container> -->
+
+                <!-- rollno Column -->
+                <ng-container matColumnDef="rollno">
+                    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.rollno}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <!-- class Column -->
+                <ng-container matColumnDef="class">
+                    <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.class}} </mat-cell>
+                </ng-container>
+
+                <!-- phone Column -->
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell *matHeaderCellDef> Phone no. </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+                </ng-container>
+
+                <!-- action Column -->
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef class="tbl-right"> Action </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="tbl-right">
+                        <!-- <button mat-icon-button color="primary" matTooltip="View">
+                            <mat-icon>visibility</mat-icon>
+                        </button> -->
+                        <button mat-icon-button color="primary" matTooltip="Edit">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)="onDeleteStudent()" matTooltip="Delete">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+        </mat-tab>
+
+        <!-- ======================================================================================================================= -->
+
+        <!-- Add Students -->
+        <mat-tab label="Add student">
+            <br>
+            <form action="" [formGroup]="addStudentForm" #addStudent>
+                <mat-card class="no-shadow">
+                    <mat-card-title>Personal details</mat-card-title>
+                    <mat-card style="background: none; box-shadow: none;">
+                        <mat-card-header>
+                            <div mat-card-avatar class="example-header-image"></div>
+                            <!-- <mat-card-title><span>User name</span></mat-card-title>
+                                    <mat-card-subtitle><span>User Type</span></mat-card-subtitle> -->
+                        </mat-card-header>
+                    </mat-card>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="First name" formControlName="firstname" required>
+                        <mat-error *ngIf="addStudentForm.get('firstname').invalid">Please enter first name
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="Middle name" formControlName="middlename" required>
+                        <mat-error *ngIf="addStudentForm.get('middlename').invalid">Please enter middle name
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="Last name" formControlName="lastname" required>
+                        <mat-error *ngIf="addStudentForm.get('lastname').invalid">Please enter last name
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput [matDatepicker]="pickerdob" placeholder="Date of birth" formControlName="dateofbirth" required>
+                        <mat-datepicker-toggle matSuffix [for]="pickerdob"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerdob></mat-datepicker>
+                        <mat-error *ngIf="addStudentForm.get('dateofbirth').invalid">Please select date of birth
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="gndr">
+                        <p><label class="half-width">Select Gender</label></p>
+                        <mat-radio-group aria-label="Select Gender" class="half-width" color="primary">
+                            <mat-radio-button value="Male" checked>Male</mat-radio-button>
+                            <mat-radio-button value="Female">Female</mat-radio-button>
+                            <mat-radio-button value="Other">Other</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </mat-card>
+                <br>
+                <mat-card class="no-shadow">
+                    <mat-card-title>Class details</mat-card-title>
+                    <mat-form-field class="full-width">
+                        <mat-label>Class</mat-label>
+                        <mat-select formControlName="class" required>
+                            <mat-option *ngFor="let class of classes" [value]="class.value">
+                                {{class.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addStudentForm.get('class').invalid">Please select class
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="Roll no." formControlName="rollno" required>
+                        <mat-error *ngIf="addStudentForm.get('rollno').invalid">Please enter roll number
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput [matDatepicker]="pickerJoinjd" placeholder="Joining date" formControlName="joiningdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="pickerJoinjd"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerJoinjd></mat-datepicker>
+                        <mat-error *ngIf="addStudentForm.get('joiningdate').invalid">Please select joining date
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card>
+                <br>
+                <mat-card class="no-shadow">
+                    <mat-card-title>Address details</mat-card-title>
+                    <mat-form-field class="full-width">
+                        <textarea type="text" matInput placeholder="Address" rows="3" formControlName="address" required></textarea>
+                        <mat-error *ngIf="addStudentForm.get('address').invalid">Please enter address
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>City</mat-label>
+                        <mat-select formControlName="city" required>
+                            <mat-option *ngFor="let city of cities" [value]="city.value">
+                                {{city.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addStudentForm.get('city').invalid">Please select city
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="state" required>
+                            <mat-option *ngFor="let state of states" [value]="state.value">
+                                {{state.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addStudentForm.get('state').invalid">Please select state
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput #postalCode maxlength="6" placeholder="Postal code" formControlName="postalcode" required>
+                        <mat-error *ngIf="addStudentForm.get('postalcode').invalid">Please enter postal code
+                        </mat-error>
+                        <mat-hint align="end">{{postalCode.value.length}} / 6</mat-hint>
+                    </mat-form-field>
+                </mat-card>
+                <br>
+                <mat-card class="no-shadow">
+                    <mat-card-title>Security details</mat-card-title>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="Phone number" formControlName="phonenumber" required>
+                        <mat-error *ngIf="addStudentForm.get('phonenumber').invalid">Please enter phonenumber
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="Parent Contact" required>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="text" matInput placeholder="Email" formControlName="email" email required>
+                        <mat-error *ngIf="addStudentForm.get('email').invalid">Please enter email
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field class="full-width">
+                        <input type="password" matInput placeholder="Password" formControlName="password" required>
+                        <mat-error *ngIf="addStudentForm.get('password').invalid">Please enter password
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input type="password" matInput placeholder="Confirm password" formControlName="confirmpassword" required>
+                        <mat-error *ngIf="addStudentForm.get('confirmpassword').invalid">Please enter confirm password
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card>
+                <mat-card-actions align="end">
+                    <button mat-stroked-button color="warn" type="reset">Cancel</button>
+                    <button mat-flat-button color="primary" type="submit">Add</button>
+                </mat-card-actions>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

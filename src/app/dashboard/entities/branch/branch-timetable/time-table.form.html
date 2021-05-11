@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Add Time Table</h1>
+    <form action="" [formGroup]="addTimeTableForm" #addTimeTable (click)="onSave()">
+        <mat-form-field class="full-width">
+            <input type="text" matInput placeholder="Title" formControlName="title" required>
+            <mat-error *ngIf="addTimeTableForm.get('title').invalid">Please enter Title</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickertimetable" placeholder="Date of Time Table" formControlName="dateofTimeTable" required>
+            <mat-datepicker-toggle matSuffix [for]="pickertimetable"></mat-datepicker-toggle>
+            <mat-datepicker #pickertimetable></mat-datepicker>
+            <mat-error *ngIf="addTimeTableForm.get('dateofTimeTable').invalid">Please select date</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <textarea type="text" matInput placeholder="Description" rows="1"></textarea>
+        </mat-form-field>
+        <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+            <div class="button-icon">
+                <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)">
+                <span>Drag & Drop</span>
+            </div>
+        </div>
+        <div class="files-list" *ngFor="let file of files;let i= index">
+            <p> {{ file }} </p>
+            <button class="delete-file" (click)="deleteAttachment(i)">
+                <img src="../../assets/Recycle_Bin_Full.png">
+            </button>
+        </div>
+        <div mat-dialog-actions align="end">
+            <button mat-stroked-button color="warn" type="reset">Cancel</button>
+            <button mat-flat-button color="primary" cdkFocusInitial>Add</button>
+        </div>
+    </form>

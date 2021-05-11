@@ -1,0 +1,50 @@
+<p class="heading">Exam Schedule</p>
+<mat-card>
+    <mat-form-field id="searchBar" class="table"><input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search"></mat-form-field>
+
+<mat-card>
+    <mat-card-title>CIA 1</mat-card-title>
+    <form action="">
+        <!-- student list -->
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="exmdate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+                <mat-cell *matCellDef="let student"> {{student.exmdate}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="subject">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+                <mat-cell *matCellDef="let student"> {{student.subject}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="start_time">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Timing </mat-header-cell>
+                <mat-cell *matCellDef="let student"> {{student.start_time}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+                <mat-cell *matCellDef="let student"> {{student.description}} </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="ttl_marks">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+                <mat-cell *matCellDef="let student"> {{student.ttl_marks}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="passing_mark">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Passing Mark </mat-header-cell>
+                <mat-cell *matCellDef="let student"> {{student.passing_mark}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let student; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+
+    </form>
+</mat-card>
+</mat-card>

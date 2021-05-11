@@ -1,0 +1,15 @@
+.half-width {
+    width: 45%;
+}
+
+div, h1 {
+    text-align: left;
+}
+
+.full-width {
+    width: 98%;
+}
+
+mat-form-field {
+    margin: 8px;
+}
